@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vezhbi 2</title>
+
+    <style>
+        #main {
+            width: 1500px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        span {
+            font-weight: bold;
+        }
+
+        label {
+            display: inline-block;
+            width: 200px;
+        }
+
+        input, select {
+            width: 250px;
+        }
+
+        .form_field, .form_dropdown, #available-teachers, h2 {
+            padding: 10px;
+        }
+
+        #form_role {
+            text-align: center;
+        }
+
+        .form_button {
+            padding: 10px;
+        }
+
+        .form_button button {
+            width: 50px;
+        }
+
+        #cards {
+            display: flex;
+            padding: 10px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            display: block;
+            text-align: center;
+        }
+
+        .desc {
+            font-weight: normal;
+            padding-top: 5px;
+            line-height: 2;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main">
+        <div class="center"><h1>User Cards</h1></div>
+        <div class="form">
+            <div class="form_field">
+                <label for="form_user">Username</label>
+                <input type="text" id="form_user" name="form_user" />
+            </div>
+
+            <div class="form_field">
+                <label for="form_id">Id</label>
+                <input type="text" id="form_id" name="form_id" />
+            </div>
+
+            <div class="form_field">
+                <label for="form_width">Width</label>
+                <input type="number" id="form_width" name="form_width" />px
+            </div>
+
+            <div class="form_field">
+                <label for="form_height">Height</label>
+                <input type="number" id="form_height" name="form_height" />px
+            </div>
+
+            <div class="form_dropdown">
+                <label for="form_color">Color</label>
+                <select id="form_color" name="form_color">
+                    <option value="red">red</option>
+                    <option value="yellow">yellow</option>
+                    <option value="green">green</option>
+                    <option value="blue">blue</option>
+                </select>
+            </div>
+
+            <div class="form_button">
+                <button onclick="addColor()">Add</button>
+            </div>
+        </div>
+
+        <div id="total">Вкупно продадени: <span id="sold">0</span></div>
+
+        <div id="cards">
+
+        </div>
+    </div>
+
+    <script>
+        var totalSold = 0;
+        var cardsParent = document.getElementById('cards');
+        var cardsArray = new Array();
+
+        window.onload = function() {
+            setTotalSold();
+        }
+
+        function addColor() {
+            let username = document.getElementById('form_user').value;
+            let id = document.getElementById('form_id').value;
+            let width = document.getElementById('form_width').value;
+            let height = document.getElementById('form_height').value;
+            let color = document.getElementById('form_color').value;
+
+            if(username === "" || id === "" || width === "" || height === "" || color === "") {
+                alert("Greshka! Mora da gi vnesete site polinja!");
+                return;
+            }
+
+            if(!isIdValid(id)) {
+                alert("Greshka! Mora da vnesete validno ID!");
+                return;
+            }
+
+            let totalSum = width * height * 0.5;
+
+            let element = "<div class='desc'>Id: " + id +
+                "<br/>Width: " + width +
+                "<br/>Height: " + height +
+                "<br/>Color: " + color +
+                "<br/>Total sum: " + totalSum +
+                "</div><button onclick=\"sell(" + totalSum + ", " + id + ", this)\">Sell</button";
+
+            if(cardsArray.includes(id)) {
+                let cardById = document.getElementById(id);
+                cardById.innerHTML = element;
+                cardById.style.backgroundColor = color;
+                cardById.style.width = width + "px";
+                cardById.style.height = height + "px";
+
+                return;
+            }
+
+            cardsArray.push(id);
+            let card = document.createElement('div');
+            card.id = id;
+            card.classList.add('card');
+            card.innerHTML = element;
+
+            card.style.backgroundColor = color;
+            card.style.width = width + "px";
+            card.style.height = height + "px";
+
+            cardsParent.append(card);
+        }
+
+        function updateCard(id) {
+            let username = document.getElementById('form_user').value;
+            let width = document.getElementById('form_width').value;
+            let height = document.getElementById('form_height').value;
+            let color = document.getElementById('form_color').value;
+
+
+        }
+
+        function setTotalSold() {
+            document.getElementById('sold').innerHTML = totalSold;
+        }
+
+        function isIdValid(str) {
+            for(let i = 0; i < str.length; i++) {
+                if((str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9')) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function sell(sum, id, button) {
+            totalSold += sum;
+            let idx = cardsArray.indexOf(id);
+            if(idx != -1) {
+                cardsArray.splice(idx, 1);
+            }
+            button.parentNode.remove();
+            setTotalSold();
+        }
+    </script>
+</body>
+</html>
