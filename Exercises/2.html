@@ -43,6 +43,10 @@
             width: 50px;
         }
 
+        select {
+            text-align: center;
+        }
+
         #cards {
             display: flex;
             padding: 10px;
@@ -143,7 +147,7 @@
                 "<br/>Height: " + height +
                 "<br/>Color: " + color +
                 "<br/>Total sum: " + totalSum +
-                "</div><button onclick=\"sell(" + totalSum + ", " + id + ", this)\">Sell</button";
+                "</div><button onclick=\"sell(" + totalSum + ", this)\">Sell</button";
 
             if(cardsArray.includes(id)) {
                 let cardById = document.getElementById(id);
@@ -190,9 +194,9 @@
             return true;
         }
 
-        function sell(sum, id, button) {
+        function sell(sum, button) {
             totalSold += sum;
-            let idx = cardsArray.indexOf(id);
+            let idx = cardsArray.indexOf(button.parentNode.id);
             if(idx != -1) {
                 cardsArray.splice(idx, 1);
             }
