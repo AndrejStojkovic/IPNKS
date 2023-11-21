@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vezhbi 1</title>
+
+    <style>
+        #main {
+            width: 800px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        span {
+            font-weight: bold;
+        }
+
+        label {
+            display: inline-block;
+            width: 200px;
+        }
+
+        input, select {
+            width: 250px;
+        }
+
+        h2 {
+            margin: 5px 0;
+        }
+
+        table, th, td {
+            text-align: center;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        /* th, td {
+            padding: 0 15px;
+        } */
+
+        .form_field, .form_dropdown, #available-teachers, h2 {
+            padding: 5px;
+        }
+
+        #form_role {
+            text-align: center;
+        }
+
+        .form_button {
+            padding: 10px;
+        }
+
+        .form_button button {
+            width: 50px;
+        }
+
+        th:nth-child(1), td:nth-child(1) { width: 150px; }
+        th:nth-child(2), td:nth-child(2) { width: 150px; }
+        th:nth-child(3), td:nth-child(3) { width: 250px; }
+        th:nth-child(4), td:nth-child(4) { width: 50px; }
+        th:nth-child(5), td:nth-child(5) { width: 100px; }
+        th:nth-child(6), td:nth-child(6) { width: 100px; }
+    </style>
+</head>
+<body>
+
+    <div id="main">
+        <div class="center"><h1>Online classes</h1></div>
+        <div class="form">
+            <div class="form_field">
+                <label for="form_name">Name and Surname</label>
+                <input type="text" id="form_name" name="form_name" />
+            </div>
+
+            <div class="form_field">
+                <label for="form_email">Email</label>
+                <input type="email" id="form_email" name="form_email" />
+            </div>
+
+            <div class="form_field">
+                <label for="form_age">Age</label>
+                <input type="number" id="form_age" name="form_age" />
+            </div>
+
+            <div class="form_field">
+                <label for="form_user">Username</label>
+                <input type="text" id="form_user" name="form_user" />
+            </div>
+
+            <div class="form_field">
+                <label for="form_pass">Password</label>
+                <input type="password" id="form_pass" name="form_pass" />
+            </div>
+
+            <div class="form_dropdown">
+                <label for="form_role">Role</label>
+                <select id="form_role" name="form_role">
+                    <option value="teacher">teacher</option>
+                    <option value="student">student</option>
+                </select>
+            </div>
+
+            <div class="form_button">
+                <button onclick="addUser()">Add</button>
+            </div>
+        </div>
+
+        <div id="available-teachers">Available teachers: <span id="teacher-count">0</span></div>
+
+        <h2>Users</h2>
+
+        <table id="users">
+            <tr>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        var availableTeachers = 0;
+        var table = document.getElementById('users');
+        var usersTable = new Array();
+
+        window.onload = function() {
+            setAvailableTeacherCount();
+        }
+
+        function addUser() {
+            let name = document.getElementById('form_name').value;
+            let username = document.getElementById('form_user').value;
+            let email = document.getElementById('form_email').value;
+            let age = document.getElementById('form_age').value;
+            let role = document.getElementById('form_role').value;
+            let password = document.getElementById('form_pass').value;
+
+            if(name === "" || username === "" || email === "" || role === "" || age === "") {
+                alert("Greshka! Mora da gi vnesete site polinja!");
+                return;
+            }
+
+            if(usersTable.includes(username)) {
+                alert("Greshka! Toj korisnik vekje postoi!");
+                return;
+            }
+
+            if(!isPasswordValid(password)) {
+                alert("Greshka! Vnesovte nevalidna lozinka.\nVashata lozinka mora da se sostoi od minimum 10 znaci, 1 golema bukva i brojka!");
+                return;
+            }
+
+            if(role === "teacher" && age < 18) {
+                alert("Greshka! Ovoj korisnik ne mozhe da bide nastavnik bidejki nema 18 godini!");
+                return;
+            }
+
+            var row = document.createElement("tr");
+            var user = "<td>" + name + "</td>" +
+                    "<td>" + username + "</td>" +
+                    "<td>" + email + "</td>" +
+                    "<td>" + age + "</td>" +
+                    "<td>" + role + "</td>";
+
+            if(role === "student") {
+                row.style.backgroundColor = "lightblue";
+            }
+            if(role === "teacher") {
+                user += "<th><button onclick=\"addTeacher(this)\">Hire</button></th>";
+                row.style.backgroundColor = "lightgreen";
+                availableTeachers++;
+            }
+
+            usersTable.push(username);
+            row.innerHTML = user;
+            table.appendChild(row);
+            setAvailableTeacherCount();
+        }
+
+        function setAvailableTeacherCount() {
+            document.getElementById('teacher-count').innerHTML = availableTeachers;
+        }
+
+        function isPasswordValid(str) {
+            if(str.length < 10) {
+                return false;
+            }
+
+            let containsNumber = false;
+            let containsLetter = false;
+            for(let i = 0; i < str.length; i++) {
+                if(str[i] >= '0' && str[i] <= '9') {
+                    containsNumber = true;
+                }
+                if(str[i] >= 'A' && str[i] <= 'Z') {
+                    containsLetter = true;
+                }
+            }
+
+            return containsNumber && containsLetter;
+        }
+
+        function addTeacher(button) {
+            let row = button.parentNode.parentNode;
+            row.style.backgroundColor = "lightgray";
+            button.parentNode.remove();
+            availableTeachers--;
+            setAvailableTeacherCount();
+        }
+    </script>
+</body>
+</html>
