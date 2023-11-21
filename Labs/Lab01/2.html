@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labs 1.2 | Andrej Stojkovikj 225043</title>
+</head>
+<body>
+
+<!--
+    2. Да се направи веб страница каде од тастатура (преку prompt) се чита мобилен број во следниот
+    формат XXYYYZZZ (пр. 71298486). Програмата треба во конзола да го испечати во формат
+    XXX/YYY-ZZZ (пр. 071/298-486). Дополнително, треба да го испечати и името на операторот.
+    (070/071/072 - T-mobile, 075/076 – One, 077/078 – Vip).
+-->
+
+<script>
+
+    let input = window.prompt("Внесете телефонски број во формат XXYYYZZZ!");
+    input = input.toString();
+
+    if(input.length != 8 || isNaN(parseInt(input))) {
+        window.alert("Внесовте број со грешен формат!");
+    } else {
+        let number = "0" + input.substr(0, 2) + "/" + input.substr(2, 3) + "-" + input.substr(5, 3);
+        let operator = "";
+        let success = true;
+        let c = input[1];
+        if(c == "0" || c == "1" || c == "2") {
+            operator = "T-mobile";
+        } else if(c == "5" || c == "6") {
+            operator = "One";
+        } else if(c == "7" || c == "8") {
+            operator = "Vip"
+        } else {
+            window.alert("Внесовте број со грешен формат!");
+            success = false;
+        }
+
+        if(success) window.alert(number + " " + operator);
+    }
+</script>
+</body>
+</html>

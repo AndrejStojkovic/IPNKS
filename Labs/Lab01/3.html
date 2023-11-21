@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labs 1.3 | Andrej Stojkovikj 225043</title>
+</head>
+<body>
+
+<!--
+    3. Да се направи веб страница каде од тастатура (преку prompt) ќе се внесат 3 стрингови. Програмата
+    треба во alert прозорец да го испечати најдолгиот збор во рамките на сите 3 стрингови.
+    Пример
+    Влез: Прва лабораториска вежба
+          Во оваа лабораторија е многу жешко
+          Надвор е убав ден
+    Излез: лабораториска
+-->
+
+<script>
+    function findLongest(inputString) {
+        let words = inputString.split(" ");
+        let longest = "";
+
+        for(let i = 0; i < words.length; i++) {
+            if(words[i].length > longest.length) {
+                longest = words[i];
+            }
+        }
+
+        return longest;
+    }
+
+    let longestWord = "";
+    for(let i = 0; i < 3; i++) {
+        let input = prompt("Внесете стринг:");
+        let l = findLongest(input);
+        if(l.length > longestWord.length) {
+            longestWord = l;
+        }
+    }
+    alert("Најдолгиот збор е \"" + longestWord + "\"");
+</script>
+</body>
+</html>
