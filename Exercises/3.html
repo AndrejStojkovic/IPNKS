@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vezhbi 3</title>
+
+    <style>
+        #main {
+            width: 1000px;
+        }
+        .string {
+            display: inline-block;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="main">
+        <div id="strings"></div>
+        <hr />
+        <div id="selected"></div>
+        <hr />
+        <button onclick="check()">Check</button>
+    </div>
+    
+    <script>
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        window.onload = function() {
+            let strings = document.getElementById("strings");
+
+            for(let i = 0; i < 50; i++) {
+                let str = "";
+                let len = getRandomInt(3, 10);
+
+                for(let j = 0; j < len; j++) {
+                    let num = Math.floor(Math.random() * 26);
+                    str += letters[num];
+                }
+
+                let element = document.createElement("div");
+                element.classList.add("string");
+                element.innerHTML = str;
+                element.style.backgroundColor = getRandomColor();
+                // element.addEventListener("click", function addtoSelected(event) {
+                //     let copy = element.cloneNode(true);
+                //     copy.addEventListener("click", function )
+                //     document.getElementById("selected").appendChild(copy);
+                //     element.remove();
+                // });
+                element.addEventListener("click", function handle(event) { addToSelected(element); });
+                strings.appendChild(element);
+            }
+        }
+
+        function check() {
+            let elements = document.getElementById("selected").getElementsByClassName("string");
+
+            if(elements.length <= 1) {
+                alert("Greshka! Mora da odberete barem 2 string-ovi!");
+                return;
+            }
+
+            let total = elements[0].innerHTML.length;
+            for(let i = 1; i < elements.length; i++) {
+                let current = elements[i].innerHTML;
+                let prev = elements[i - 1].innerHTML;
+
+                if(current[0] != prev[prev.length - 1]) {
+                    alert("Greshka! Sekoj nareden zbor treba da pochnuva na poslednata bukva od prethodniot zbor!");
+                    return;
+                }
+
+                total += current.length;
+            }
+
+            alert("Uspeshno! Osvoivte " + total + " poeni!");
+        }
+
+        function addToSelected(element) {
+            let copy = element.cloneNode(true);
+            copy.addEventListener("click", function handle(event) { removeFromSelected(copy); })
+            document.getElementById("selected").appendChild(copy);
+            element.remove();
+        }
+
+        function removeFromSelected(element) {
+            let copy = element.cloneNode(true);
+            copy.addEventListener("click", function handle(event) { addToSelected(copy); })
+            document.getElementById("strings").appendChild(copy);
+            element.remove();
+        }
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * ((max + 1) - min) + min);
+        }
+
+        function getRandomColor() {
+            const hex = '0123456789ABCDEF';
+            var color = '#';
+            for(let i = 0; i < 6; i++) {
+                color += hex[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+</body>
+</html>
