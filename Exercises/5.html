@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vezhbi 5</title>
+    
+    <style>
+        table, tr, th, td {
+            border: 1px solid black;
+        }
+
+        #result {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main">
+        <table id="table">
+            <tr>
+                <th>ime</th>
+                <th>kolichina</th>
+                <th>cena</th>
+                <th>kupi</th>
+            </tr>
+        </table>
+
+        <button onclick="calculate()">presmetaj</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const json = '{ "jabolka" : { "kolichina" : 3, "cena": 5 }, "kajsija" : { "kolichina" : 5, "cena": 7 }, "sliva" : { "kolichina" : 4, "cena": 1 }, "praska" : { "kolichina" : 1, "cena": 8 }, "dunja" : { "kolichina" : 2, "cena": 2 } }';
+        const data = JSON.parse(json);
+
+        window.onload = function() {
+            for(const item in data) {
+                let row = document.createElement("tr");
+                row.id = item;
+
+                let name = document.createElement("td");
+                name.innerHTML = item;
+                row.append(name);
+
+                let quantity = document.createElement("td");
+                quantity.innerHTML = data[item].kolichina;
+                row.appendChild(quantity);
+
+                let price = document.createElement("td");
+                price.innerHTML = data[item].cena;
+                row.appendChild(price);
+
+                let amountData = document.createElement("td");
+                let amount = document.createElement("input");
+                amount.id = "input_" + item;
+                amount.type = "number";
+                amount.style.width = "40px";
+                amountData.appendChild(amount);
+                row.appendChild(amountData);
+
+                document.getElementById("table").appendChild(row);
+            }
+        }
+
+        function calculate() {
+            let valid = true;
+            let total = 0;
+
+            document.getElementById("result").innerHTML = "";
+
+            for(const item in data) {
+                let quantity = parseInt(data[item].kolichina);
+                let price = parseInt(data[item].cena);
+
+                let inputField = document.getElementById("input_" + item);
+                let value = parseInt(inputField.value);
+
+                if(value < 0) {
+                    document.getElementById("result").innerHTML += "negativna vrednost kaj " + item + "<br/>";
+                    inputField.parentNode.parentNode.style.backgroundColor = "red";
+                    valid = false;
+                    continue;
+                }
+
+                if(inputField.value == "" || value > quantity) {
+                    document.getElementById("result").innerHTML += "pogreshna kolichina kaj " + item + "<br/>";
+                    inputField.parentNode.parentNode.style.backgroundColor = "red";
+                    valid = false;
+                    continue;
+                }
+
+                inputField.parentNode.parentNode.style.backgroundColor = "white";
+                console.log("Price: " + price + ", Quantity: " + value + " - " + price * value);
+                total += price * value;
+            }
+
+
+            if(valid) {
+                document.getElementById("result").innerHTML = "vkupna cena " + total + "<br/>";
+            }
+        }
+    </script>
+</body>
+</html>
