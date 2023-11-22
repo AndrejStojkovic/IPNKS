@@ -162,6 +162,7 @@
             }
 
             var row = document.createElement("tr");
+            row.id = username;
             var user = "<td>" + name + "</td>" +
                     "<td>" + username + "</td>" +
                     "<td>" + email + "</td>" +
@@ -209,6 +210,10 @@
         function addTeacher(button) {
             let row = button.parentNode.parentNode;
             row.style.backgroundColor = "lightgray";
+            let idx = usersTable.indexOf(button.parentNode.parentNode.id);
+            if(idx != -1) {
+                usersTable.splice(idx, 1);
+            }
             button.parentNode.remove();
             availableTeachers--;
             setAvailableTeacherCount();
