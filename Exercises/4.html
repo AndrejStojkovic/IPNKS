@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vezhbi 4</title>
+</head>
+<body>
+    
+    <div id="main">
+        <div id="input_fields">
+        </div>
+        <div id="util_buttons">
+            <button onclick="addInput()">Додади</button><br/>
+            <button onclick="calculate()">Пресметај</button>
+        </div>
+        <div id="data">
+            <div>Просек: <span id="avg"></span></div>
+            <div>Максимум: <span id="max"></span></div>
+            <div>Минимум: <span id="min"></span></div>
+        </div>
+    </div>
+    
+    <script>
+        window.onload = function() {
+            addInput();
+        }
+
+        function addInput() {
+            let inputField = document.createElement("div");
+            inputField.classList.add("input_field");
+
+            let input = document.createElement("input");
+            input.classList.add("input_number");
+            input.type = "number";
+            inputField.appendChild(input);
+
+            let button = document.createElement("button");
+            button.innerHTML = "Избриши";
+            button.addEventListener("click", function handle(event) { deleteInput(button); });
+            inputField.appendChild(button);
+
+            document.getElementById("input_fields").appendChild(inputField);
+        }
+
+        function deleteInput(button) {
+            button.parentNode.remove();
+        }
+
+        function calculate() {
+            let inputs = document.getElementsByClassName("input_number");
+            console.log(inputs);
+
+            let avg = 0;
+            max = Number.MIN_VALUE;
+            min = Number.MAX_VALUE;
+            for(let i = 0; i < inputs.length; i++) {
+                let val = parseInt(inputs[i].value);
+                avg += val;
+                if(val > max) max = val;
+                if(val < min) min = val;
+            }
+
+            document.getElementById("avg").innerHTML = avg / inputs.length;
+            document.getElementById("max").innerHTML = max;
+            document.getElementById("min").innerHTML = min;
+        }
+    </script>
+</body>
+</html>
