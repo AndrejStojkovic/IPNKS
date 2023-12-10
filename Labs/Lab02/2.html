@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 2.2 | Andrej Stojkovikj</title>
+</head>
+<body>
+    <button style="margin-bottom: 15px;" onclick="randomImage()">Random Image</button> <br/>
+    <img src="" id="image" alt="Image here">
+
+    <script>
+        const images = [
+            "https://designmodo.com/wp-content/uploads/2014/07/free-photos.jpg",
+            "https://farm5.staticflickr.com/4060/4567292488_5d3f4b05f6_z.jpg",
+            "https://wallup.net/wp-content/uploads/2017/03/28/401266-landscape-road-forest-748x421.jpg"
+        ]
+
+        function randomImage() {
+            document.getElementById("image").src = images[Math.floor(Math.random() * images.length)];
+        }
+    </script>
+</body>
+</html>

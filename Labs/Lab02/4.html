@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 2.4 | Andrej Stojkovikj</title>
+
+    <style>
+        body * {
+            margin: 5px 0;
+        }
+        input {
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div id="first-row">
+        <input type="number" placeholder="0" id="c-11" />
+        <input type="number" placeholder="0" id="c-12" />
+        <span style="font-style: italic;">i</span>
+    </div>
+
+    <div id="second-row">
+        <input type="number" placeholder="0" id="c-21" />
+        <input type="number" placeholder="0" id="c-22" />
+        <span style="font-style: italic;">i</span>
+    </div>
+
+    <button onclick="add()">Add</button>
+
+    <div id="result">
+        <input type="number" placeholder="0" id="c-31" />
+        <input type="number" placeholder="0" id="c-32" />
+        <span style="font-style: italic;">i</span>
+    </div>
+
+    <script>
+        function add() {
+            let num1 = Number.parseInt(document.getElementById("c-11").value);
+            let im1 = Number.parseInt(document.getElementById("c-12").value);
+            let num2 = Number.parseInt(document.getElementById("c-21").value);
+            let im2 = Number.parseInt(document.getElementById("c-22").value);
+
+            document.getElementById("c-31").value = num1 + num2;
+            document.getElementById("c-32").value = im1 + im2;
+        }
+    </script>
+</body>
+</html>

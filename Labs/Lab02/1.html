@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 2.1 | Andrej Stojkovikj</title>
+</head>
+<body>
+    <form>
+        <select id="colorSelect">
+            <option>Red</option>
+            <option>Green</option>
+            <option>White</option>
+            <option>Black</option>
+        </select>
+        <input type="button" onclick="removecolor()" value="Select and Remove"><br />
+    </form>
+
+    <script>
+        function removecolor() {
+            let selection = document.getElementById("colorSelect").value;
+            let options = document.getElementsByTagName("option");
+
+            if(selection == "") return;
+
+            for(let opt of options) {
+                if(opt.value == selection) {
+                    opt.remove(); break;
+                }
+            }
+
+            console.log("Removed color: " + selection);
+        }
+    </script>
+</body>
+</html> 
