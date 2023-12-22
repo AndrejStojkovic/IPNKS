@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 3.3 | Andrej Stojkovikj</title>
+</head>
+<body>
+    <script>
+        const PI = 3.14;
+        const radius = 3;
+        const height = 5;
+
+        // So Klasa
+        class Cylinder {
+            constructor(radius, height) {
+                this.radius = radius;
+                this.height = height;
+            }
+
+            getVolume() {
+                return this.radius * this.radius * this.height * PI;
+            }
+        }
+
+        let cylinderClass = new Cylinder(radius, height);
+        console.log("Cylinder class, radius: " + radius + ", height: " + height);
+        console.log("Volume: " + cylinderClass.getVolume());
+
+        // So Prototype
+        function CylinderPrototype(radius, height) {
+            this.radius = radius;
+            this.height = height;
+
+            function getVolume() {
+                return this.radius * this.radius * this.height * PI;
+            }
+        }
+
+        let cylinderPrototype = new CylinderPrototype(radius, height);
+        console.log("Cylinder class, radius: " + radius + ", height: " + height);
+        console.log("Volume: " + cylinderClass.getVolume());
+    </script>
+</body>
+</html>

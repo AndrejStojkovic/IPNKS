@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 3.4 | Andrej Stojkovikj</title>
+</head>
+<body>
+    <script>
+        class Book {
+            constructor(title, author, alreadyRead) {
+                this.title = title;
+                this.author = author;
+                this.alreadyRead = alreadyRead;
+            }
+
+            print() {
+                let msg = "";
+                if(this.alreadyRead) {
+                    msg = "You already read \"" + this.title + "\" by " + this.author + ".";
+                } else {
+                    msg = "You still need to read \"" + this.title + "\" by " + this.author + ".";
+                }
+                return msg;
+            }
+        }
+
+        let books = [
+            new Book("The Hobbit", "J.R.R Tolkien", true),
+            new Book("The Lord of the Rings", "J.R.R Tolkien", false),
+        ];
+
+        for(book of books) {
+            console.log(book.print());
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 3.2 | Andrej Stojkovikj</title>
+</head>
+<body>
+    <script>
+        const array = [2, 5, 9, 6];
+        console.log(array);
+        console.log(removeElement(array, 5));
+
+        function removeElement(arr, val) {
+            return arr.filter((element, idx) => element !== val);
+        }
+    </script>
+</body>
+</html>
