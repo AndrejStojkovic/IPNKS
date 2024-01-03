@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 4.1 | Andrej Stojkovikj</title>
+    <style>
+        table, th, td {
+            border: 1px solid;
+        }
+
+        label {
+            text-align: right;
+            display: inline-block;
+            width: 65px;
+        }
+
+        input, select {
+            width: 150px;
+        }
+
+        #inputs * {
+            margin: 4px 0;
+        }
+    </style>
+</head>
+<body>
+    <h2>Форма за внесување оцени</h2>
+
+    <div id="inputs">
+        <div id="name-field">
+            <label for="name">Име:</label>
+            <input name="name" id="name" />
+        </div>
+        <div id="surname-field">
+            <label for="surname">Презиме:</label>
+            <input name="surname" id="surname" />
+        </div>
+        <div id="index-field">
+            <label for="index">Индекс:</label>
+            <input name="index" id="index" />
+        </div>
+        <div id="subject-field">
+            <label for="subject">Предмет:</label>
+            <input name="subject" id="subject" />
+        </div>
+        <div id="grade-field">
+            <label for="grade">Оцена:</label>
+            <select id="grade">
+                <option>5 (пет)</option>
+                <option>6 (шест)</option>
+                <option>7 (седум)</option>
+                <option>8 (осум)</option>
+                <option>9 (девет)</option>
+                <option>10 (десет)</option>
+            </select>
+        </div>
+        <div id="submit-button">
+            <button onclick="submit()">Внеси</button>
+        </div>
+    </div>
+
+    <div>
+        <table id="table">
+            <tr>
+                <th>Име</th>
+                <th>Презиме</th>
+                <th>Индекс</th>
+                <th>Предмет</th>
+                <th>Оцена</th>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function submit() {
+            let element = document.createElement('tr');
+            element.innerHTML = "<td>" + getValue('name') + "</td>" +
+                                "<td>" + getValue('surname') + "</td>" +
+                                "<td>" + getValue('index') + "</td>" +
+                                "<td>" + getValue('subject') + "</td>" +
+                                "<td>" + getValue('grade') + "</td>";
+
+            document.getElementById('table').append(element);
+        }
+
+        function getValue(str) {
+            console.log(document.getElementById(str).value);
+            return document.getElementById(str).value;
+        }
+    </script>
+</body>
+</html>

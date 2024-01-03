@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 4.3 | Andrej Stojkovikj</title>
+
+    <style>
+        #bg {
+            padding: 15px;
+        }
+
+        h2 {
+            margin: 0;
+            padding: 5px 0;
+        }
+
+        .buttons {
+            display: flex;
+            justify-items: center;
+            padding: 5px 0;
+        }
+
+        button {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="bg">
+        <h2>Промена на позадина</h2>
+
+        <div class="buttons">
+            <input type="radio" name="type" id="color" value="color" />
+            <label for="color">Color</label>
+
+            <input type="radio" name="type" id="image" value="image" />
+            <label for="image">Image</label>
+        </div>
+
+        <div>
+            <label for="value">Value:</label>
+            <input name="type" id="value" />
+        </div>
+
+        <div>
+            <button onclick="change()">Промени</button>
+        </div>
+    </div>
+
+    <script>
+        function change() {
+            let bg = document.getElementById("bg");
+            let option = document.querySelector('input[name="type"]:checked').value;
+            let value = document.getElementById("value").value;
+
+            if(option == null) {
+                alert("No option was selected!");
+                return;
+            }
+
+            if(option == "color") {
+                bg.style.backgroundColor = value;
+            } else if(option == "image") {
+                bg.style.backgroundImage = "url(" + value + ")";
+            }
+        }
+    </script>
+</body>
+</html>

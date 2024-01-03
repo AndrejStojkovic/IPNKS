@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 4.2 | Andrej Stojkovikj</title>
+    <style>
+        label {
+            text-align: right;
+            display: inline-block;
+            width: 40px;
+        }
+
+        input, select {
+            width: 150px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    
+    <div>
+        <label for="items">Items: </label>
+        <input name="items" id="items" />
+    </div>
+
+    <div>
+        <label for="type">Type: </label>
+        <select name="type" id="type">
+            <option value="radio">Radio button</option>
+            <option value="checkbox">Check box</option>
+        </select>
+    </div>
+
+    <button onclick="show()">Прикажи</button>
+
+    <form id="result">
+
+    </form>
+
+    <script>
+        function show() {
+            let type = document.getElementById('type').value;
+            let options = document.getElementById('items').value;
+            let result = document.getElementById('result');
+
+            if(!options) {
+                alert("Greshka! Nemate vneseno nishto vo poleto 'Items'!");
+                return;
+            }
+
+            let items = options.split(", ");
+            result.innerHTML = "";
+
+            for(item of items) {
+                result.innerHTML += "<input type=\"" + type + "\" name=\"results\" value=\"" + item + "\" />" + item;
+            }
+        }
+    </script>
+</body>
+</html>
