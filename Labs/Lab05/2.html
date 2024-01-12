@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 5.2 | Andrej Stojkovikj</title>
+</head>
+<body>
+    <div>
+        <div style="text-align:right; float:left">
+            <label id="obid">Обиди 0</label>
+            <p>Погодок: <input id="guess" style="width:150px" /></p>
+            <button onclick="guess()">Погоди</button>
+            <button onclick="reset()">Од почеток</button>
+        </div>
+    </div>
+    <br />
+    <div id="prikaz" style="clear: both">
+    </div>
+
+    <script>
+        let finished = false;
+        const number = randomInt(1000, 9999).toString();
+        let attempts = 0;
+
+        function guess() {
+            if(finished) return;
+
+            let g = document.getElementById("guess").value;
+            attempts++;
+
+            if(g < 1000 || g > 9999) {
+                alert("Greshka, vnesete tochen broj vo opseg [1000, 9999]");
+                return;
+            }
+
+            g = g.toString();
+
+            if(g == number) {
+                finished = false;
+                print("ПОГОДОК!!!");
+                return;
+            }
+
+            let correct = 0, total = 0;
+            
+            // For correct places
+            let arr = number.split("");
+            for(let i = 0; i < 4; i++) {
+                correct = arr[i] == g[i] ? correct + 1 : correct;
+            }
+
+            // For total
+            arr = number.split("");
+            for(let i = 0; i < 4; i++) {
+                for(let j = 0; j < 4; j++) {
+                    total = arr[i] == g[j] && i != j ? total + 1 : total;
+                }
+            }
+
+            print("Има " + total + ", на место " + correct + " " + g);
+
+            if(attempts == 10) {
+                print("Не успеавте да погодите до 10 обиди. Бројот е " + number);
+                finished = true;
+            }
+
+            document.getElementById("obid").innerHTML = "Обиди " + attempts;
+        }
+
+        function reset() {
+            window.location.reload();
+        }
+
+        function print(str) {
+            let div = document.createElement("div");
+            div.innerHTML = str;
+            document.getElementById("prikaz").appendChild(div);
+        }
+
+        function randomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+    </script>
+</body>
+</html>
